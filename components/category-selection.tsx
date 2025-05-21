@@ -45,14 +45,9 @@ interface Organization {
 type Step = "category" | "organization" | "branch" | "service" | "datetime";
 
 export default function CategorySelection() {
-  // Default values for category and organization
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    // null
-    { id: "default-category-id", name: "Default Category", icon: "default-icon" }
-  );
+  
   const [selectedOrganization, setSelectedOrganization] =
     useState<Organization | null>(
-      // null
       { id: "df41b5cf-0a23-4fa0-b9d1-f0f58791ffc1", name: "Soreti Spa & Massage", logo: "/soreti-logo.png", description: "Default description" }
     );
   // Start directly with branch selection

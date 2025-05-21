@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import PromotionCarousel from "@/components/promotion-carousel";
 import HeroCarousel from "@/components/hero-carousel";
 import { useAuth } from "@/lib/auth-context";
+import Image from "next/image";
 
 export default function Home() {
   const { token, user, isTokenLoading } = useAuth();
@@ -49,9 +50,10 @@ export default function Home() {
           id="categories"
           className="container mx-auto px-4 py-8 sm:py-12 max-w-4xl"
         >
-          <h2 className="text-3xl mb-8 text-center font-semibold text-gray-800">
+          {/* <h2 className="text-3xl mb-8 text-center font-semibold text-gray-800">
             Make a Reservation
-          </h2>
+          </h2> */}
+          <Image src="/soreti-logo.png" alt="Soreti Logo" width={100} height={100} />
           <CategorySelection />
         </div>
 
