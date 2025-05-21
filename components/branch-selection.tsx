@@ -165,7 +165,7 @@ type Step = "category" | "organization" | "branch" | "service" | "datetime";
 interface BranchSelectionProps {
   organization: Organization;
   onBack: () => void;
-  handleBackforCategory: () => void;
+  // handleBackforCategory: () => void;
   currentStep?: Step;
   onStepChange?: (step: Step) => void;
 }
@@ -199,7 +199,7 @@ const sortedGroupTimeSlotsByPeriod = (slots: TimeSlot[]) => {
 export default function BranchSelection({
   organization,
   onBack,
-  handleBackforCategory,
+  // handleBackforCategory,
   currentStep = "branch",
   onStepChange,
 }: BranchSelectionProps) {
@@ -227,8 +227,8 @@ export default function BranchSelection({
     isLoading: branchesLoading,
     error: branchesError,
   } = useQuery({
-    queryKey: ["branches", organization.id],
-    queryFn: () => fetchBranchByCompany(organization.id),
+    queryKey: ["branches"],
+    queryFn: () => fetchBranchByCompany("df41b5cf-0a23-4fa0-b9d1-f0f58791ffc1"),
     enabled: !!organization.id,
   });
 
@@ -489,7 +489,7 @@ export default function BranchSelection({
           setSelectedService(null);
           setSelectedBranch(null);
           onBack();
-          handleBackforCategory();
+          // handleBackforCategory();
         }, 3000);
       } else {
         setShowConfirmation(false);

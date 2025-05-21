@@ -49,7 +49,7 @@ interface OrganizationListProps {
   categoryId: string;
   categoryName: string;
   category: Category;
-  handleBackforCategory: () => void;
+  // handleBackforCategory: () => void;
   onOrganizationSelect?: (org: Organization) => void;
   selectedOrganization?: Organization | null;
   currentStep?: Step;
@@ -60,7 +60,7 @@ export default function OrganizationList({
   categoryId,
   categoryName,
   category,
-  handleBackforCategory,
+  // handleBackforCategory,
   onOrganizationSelect,
   selectedOrganization,
   currentStep = "organization",
@@ -263,7 +263,7 @@ export default function OrganizationList({
             <BranchSelection
               organization={selectedOrg}
               onBack={handleBack}
-              handleBackforCategory={handleBackforCategory}
+              // handleBackforCategory={handleBackforCategory}
               currentStep={currentStep}
               onStepChange={handleStepChange}
             />

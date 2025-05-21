@@ -11,22 +11,22 @@ import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 
-const fetchCategories = async () => {
-  try {
-    const token = localStorage.getItem("auth-token");
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/categories`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    return error;
-  }
-};
+// const fetchCategories = async () => {
+//   try {
+//     const token = localStorage.getItem("auth-token");
+//     const response = await axios.get(
+//       `${process.env.NEXT_PUBLIC_API_URL}/v1/categories`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     return error;
+//   }
+// };
 
 interface Category {
   id: string;
@@ -45,89 +45,95 @@ interface Organization {
 type Step = "category" | "organization" | "branch" | "service" | "datetime";
 
 export default function CategorySelection() {
+  // Default values for category and organization
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null
+    // null
+    { id: "default-category-id", name: "Default Category", icon: "default-icon" }
   );
   const [selectedOrganization, setSelectedOrganization] =
-    useState<Organization | null>(null);
-  const [currentStep, setCurrentStep] = useState<Step>("category");
+    useState<Organization | null>(
+      // null
+      { id: "df41b5cf-0a23-4fa0-b9d1-f0f58791ffc1", name: "Soreti Spa & Massage", logo: "/soreti-logo.png", description: "Default description" }
+    );
+  // Start directly with branch selection
+  const [currentStep, setCurrentStep] = useState<Step>("branch");
   const { toast } = useToast();
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [autoScroll, setAutoScroll] = useState(true);
+  // const carouselRef = useRef<HTMLDivElement>(null);
+  // const [autoScroll, setAutoScroll] = useState(false); // Disabled auto-scroll
 
-  const {
-    data: categories,
-    isLoading: categoriesLoading,
-    error: categoriesError,
-  } = useQuery({
-    queryKey: ["categories"],
-    queryFn: fetchCategories,
-  });
+  // const {
+  //   data: categories,
+  //   isLoading: categoriesLoading,
+  //   error: categoriesError,
+  // } = useQuery({
+  //   queryKey: ["categories"],
+  //   queryFn: fetchCategories,
+  // });
 
   // Auto-scroll effect when no category is selected
-  useEffect(() => {
-    let scrollInterval: NodeJS.Timeout | null = null;
+  // useEffect(() => {
+  //   let scrollInterval: NodeJS.Timeout | null = null;
 
-    if (
-      autoScroll &&
-      currentStep === "category" &&
-      carouselRef.current &&
-      categories?.length > 0
-    ) {
-      scrollInterval = setInterval(() => {
-        if (carouselRef.current) {
-          const scrollAmount = 220; // Approximate width of a card
-          const currentScroll = carouselRef.current.scrollLeft;
-          const maxScroll =
-            carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
+  //   if (
+  //     autoScroll &&
+  //     currentStep === "category" &&
+  //     carouselRef.current &&
+  //     categories?.length > 0
+  //   ) {
+  //     scrollInterval = setInterval(() => {
+  //       if (carouselRef.current) {
+  //         const scrollAmount = 220; // Approximate width of a card
+  //         const currentScroll = carouselRef.current.scrollLeft;
+  //         const maxScroll =
+  //           carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
 
-          // If we're at the end, loop back to start
-          if (currentScroll >= maxScroll - 20) {
-            carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
-          } else {
-            carouselRef.current.scrollBy({
-              left: scrollAmount,
-              behavior: "smooth",
-            });
-          }
-        }
-      }, 3000); // Scroll every 3 seconds
-    }
+  //         // If we're at the end, loop back to start
+  //         if (currentScroll >= maxScroll - 20) {
+  //           carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
+  //         } else {
+  //           carouselRef.current.scrollBy({
+  //             left: scrollAmount,
+  //             behavior: "smooth",
+  //           });
+  //         }
+  //       }
+  //     }, 3000); // Scroll every 3 seconds
+  //   }
 
-    return () => {
-      if (scrollInterval) clearInterval(scrollInterval);
-    };
-  }, [currentStep, categories, autoScroll]);
+  //   return () => {
+  //     if (scrollInterval) clearInterval(scrollInterval);
+  //   };
+  // }, [currentStep, categories, autoScroll]);
 
-  if (categoriesError) {
-    toast({
-      title: "Error",
-      description: "Failed to load categories. Please try again.",
-      variant: "destructive",
-    });
-  }
+  // if (categoriesError) {
+  //   toast({
+  //     title: "Error",
+  //     description: "Failed to load categories. Please try again.",
+  //     variant: "destructive",
+  //   });
+  // }
 
-  const handleCategorySelect = (category: Category) => {
-    setSelectedCategory(category);
-    setAutoScroll(false);
-    setCurrentStep("organization");
+  // const handleCategorySelect = (category: Category) => {
+  //   setSelectedCategory(category);
+  //   setAutoScroll(false);
+  //   setCurrentStep("organization");
 
-    // Reset all selections in the child components
-    // This will ensure child components start fresh when a new category is selected
-    if (window) {
-      // Use a custom event to communicate with child components
-      const resetEvent = new CustomEvent("resetSelections", {
-        detail: { trigger: "categoryChange" },
-      });
-      window.dispatchEvent(resetEvent);
-    }
-  };
+  //   // Reset all selections in the child components
+  //   // This will ensure child components start fresh when a new category is selected
+  //   if (window) {
+  //     // Use a custom event to communicate with child components
+  //     const resetEvent = new CustomEvent("resetSelections", {
+  //       detail: { trigger: "categoryChange" },
+  //     });
+  //     window.dispatchEvent(resetEvent);
+  //   }
+  // };
 
-  const handleBackToCategories = () => {
-    setSelectedCategory(null);
-    setAutoScroll(true);
-    setCurrentStep("category");
-  };
+  // const handleBackToCategories = () => {
+  //   setSelectedCategory(null);
+  //   setAutoScroll(true);
+  //   setCurrentStep("category");
+  // };
 
   // Callback for when an organization is selected
   const handleOrganizationSelect = (organization: Organization) => {
@@ -137,19 +143,23 @@ export default function CategorySelection() {
 
   // Generic back handler for navigating steps
   const handleBack = () => {
+    // Comment out navigation to category/organization steps since we're skipping them
+    /*
     if (currentStep === "organization") {
       handleBackToCategories();
-    } else if (
+    } else 
+    */
+    if (
       currentStep === "branch" ||
       currentStep === "service" ||
       currentStep === "datetime"
     ) {
-      setCurrentStep("organization");
-      setSelectedOrganization(null);
-      // Reset branch/service/datetime selections
+      // Instead of going back to organization, just reset the current step to branch
+      setCurrentStep("branch");
+      // Reset service/datetime selections if needed
       if (window) {
         const resetEvent = new CustomEvent("resetSelections", {
-          detail: { trigger: "backToOrganization" },
+          detail: { trigger: "backToBranch" },
         });
         window.dispatchEvent(resetEvent);
       }
@@ -164,7 +174,7 @@ export default function CategorySelection() {
   return (
     <div className="space-y-8">
       {/* Back Button (shown on all steps except category) */}
-      {currentStep !== "category" && (
+      {currentStep !== "branch" && (
         <Button
           variant="ghost"
           onClick={handleBack}
@@ -175,7 +185,8 @@ export default function CategorySelection() {
         </Button>
       )}
 
-      {/* Category Selection Step */}
+      {/* Category Selection Step - Commented out */}
+      {/* 
       <AnimatePresence>
         {currentStep === "category" && (
           <motion.div
@@ -251,8 +262,10 @@ export default function CategorySelection() {
           </motion.div>
         )}
       </AnimatePresence>
+      */}
 
-      {/* OrganizationList Step */}
+      {/* OrganizationList Step - Commented out */}
+      {/*
       {selectedCategory && currentStep === "organization" && (
         <div>
           <OrganizationList
@@ -264,8 +277,9 @@ export default function CategorySelection() {
           />
         </div>
       )}
+      */}
 
-      {/* Branch, Service, and DateTime steps are handled by OrganizationList and its child components */}
+      {/* Branch, Service, and DateTime steps */}
       {selectedOrganization &&
         currentStep !== "organization" &&
         currentStep !== "category" && (
@@ -274,7 +288,7 @@ export default function CategorySelection() {
               categoryId={selectedCategory!.id}
               categoryName={selectedCategory!.name}
               category={selectedCategory!}
-              handleBackforCategory={handleBackToCategories}
+              // handleBackforCategory={handleBackToCategories}
               onOrganizationSelect={handleOrganizationSelect}
               selectedOrganization={selectedOrganization}
               currentStep={currentStep}
