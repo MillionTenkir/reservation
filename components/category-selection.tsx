@@ -58,76 +58,6 @@ export default function CategorySelection() {
   // Start directly with branch selection
   const [currentStep, setCurrentStep] = useState<Step>("branch");
   const { toast } = useToast();
-  // const carouselRef = useRef<HTMLDivElement>(null);
-  // const [autoScroll, setAutoScroll] = useState(false); // Disabled auto-scroll
-
-  // const {
-  //   data: categories,
-  //   isLoading: categoriesLoading,
-  //   error: categoriesError,
-  // } = useQuery({
-  //   queryKey: ["categories"],
-  //   queryFn: fetchCategories,
-  // });
-
-  // Auto-scroll effect when no category is selected
-  // useEffect(() => {
-  //   let scrollInterval: NodeJS.Timeout | null = null;
-
-  //   if (
-  //     autoScroll &&
-  //     currentStep === "category" &&
-  //     carouselRef.current &&
-  //     categories?.length > 0
-  //   ) {
-  //     scrollInterval = setInterval(() => {
-  //       if (carouselRef.current) {
-  //         const scrollAmount = 220; // Approximate width of a card
-  //         const currentScroll = carouselRef.current.scrollLeft;
-  //         const maxScroll =
-  //           carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
-
-  //         // If we're at the end, loop back to start
-  //         if (currentScroll >= maxScroll - 20) {
-  //           carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
-  //         } else {
-  //           carouselRef.current.scrollBy({
-  //             left: scrollAmount,
-  //             behavior: "smooth",
-  //           });
-  //         }
-  //       }
-  //     }, 3000); // Scroll every 3 seconds
-  //   }
-
-  //   return () => {
-  //     if (scrollInterval) clearInterval(scrollInterval);
-  //   };
-  // }, [currentStep, categories, autoScroll]);
-
-  // if (categoriesError) {
-  //   toast({
-  //     title: "Error",
-  //     description: "Failed to load categories. Please try again.",
-  //     variant: "destructive",
-  //   });
-  // }
-
-  // const handleCategorySelect = (category: Category) => {
-  //   setSelectedCategory(category);
-  //   setAutoScroll(false);
-  //   setCurrentStep("organization");
-
-  //   // Reset all selections in the child components
-  //   // This will ensure child components start fresh when a new category is selected
-  //   if (window) {
-  //     // Use a custom event to communicate with child components
-  //     const resetEvent = new CustomEvent("resetSelections", {
-  //       detail: { trigger: "categoryChange" },
-  //     });
-  //     window.dispatchEvent(resetEvent);
-  //   }
-  // };
 
   // const handleBackToCategories = () => {
   //   setSelectedCategory(null);
@@ -143,12 +73,6 @@ export default function CategorySelection() {
 
   // Generic back handler for navigating steps
   const handleBack = () => {
-    // Comment out navigation to category/organization steps since we're skipping them
-    /*
-    if (currentStep === "organization") {
-      handleBackToCategories();
-    } else 
-    */
     if (
       currentStep === "branch" ||
       currentStep === "service" ||
@@ -185,99 +109,6 @@ export default function CategorySelection() {
         </Button>
       )}
 
-      {/* Category Selection Step - Commented out */}
-      {/* 
-      <AnimatePresence>
-        {currentStep === "category" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div>
-              {categoriesLoading ? (
-                <div className="flex overflow-x-auto pb-4 gap-6 snap-x hide-scrollbar">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div
-                      key={i}
-                      className="flex flex-col items-center min-w-[100px] flex-shrink-0 snap-start"
-                    >
-                      <div className="rounded-full bg-gray-200 w-14 h-14 mb-2">
-                        <Skeleton className="h-full w-full rounded-full" />
-                      </div>
-                      <Skeleton className="h-4 w-20" />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div
-                  ref={carouselRef}
-                  className="flex overflow-x-auto pb-4 gap-6 snap-x hide-scrollbar"
-                  onMouseEnter={() => setAutoScroll(false)}
-                  onMouseLeave={() =>
-                    currentStep === "category" && setAutoScroll(true)
-                  }
-                >
-                  {categories?.length > 0 &&
-                    categories?.map((category: Category) => (
-                      <motion.div
-                        key={category.id}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex flex-col items-center min-w-[100px] flex-shrink-0 snap-start cursor-pointer"
-                        onClick={() => handleCategorySelect(category)}
-                      >
-                        <div
-                          className={`flex items-center justify-center rounded-full w-14 h-14 mb-2 ${
-                            selectedCategory?.id === category.id
-                              ? "bg-[#E6007E]/10 border-2 border-[#E6007E]"
-                              : "bg-[#E6007E]/5 border border-[#E6007E]/30"
-                          }`}
-                        >
-                          <span className="text-[#E6007E] text-2xl">
-                            {category.icon === "chalkboard-teacher" && "💆"}
-                            {category.icon === "scissors" && "✂️"}
-                            {category.icon === "utensils" && "🍽️"}
-                            {category.icon === "dumbbell" && "💪"}
-                            {category.icon === "landmark" && "🏛️"}
-                            {category.icon === "restaurant" && "🏦"}
-                            {category.icon === "spa" && "🏥"}
-                          </span>
-                        </div>
-                        <span
-                          className={`text-center font-medium text-sm ${
-                            selectedCategory?.id === category.id
-                              ? "text-[#E6007E]"
-                              : "text-gray-700"
-                          }`}
-                        >
-                          {category.name}
-                        </span>
-                      </motion.div>
-                    ))}
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      */}
-
-      {/* OrganizationList Step - Commented out */}
-      {/*
-      {selectedCategory && currentStep === "organization" && (
-        <div>
-          <OrganizationList
-            categoryId={selectedCategory.id}
-            categoryName={selectedCategory.name}
-            category={selectedCategory}
-            handleBackforCategory={handleBackToCategories}
-            onOrganizationSelect={handleOrganizationSelect}
-          />
-        </div>
-      )}
-      */}
 
       {/* Branch, Service, and DateTime steps */}
       {selectedOrganization &&
@@ -285,9 +116,9 @@ export default function CategorySelection() {
         currentStep !== "category" && (
           <div>
             <OrganizationList
-              categoryId={selectedCategory!.id}
-              categoryName={selectedCategory!.name}
-              category={selectedCategory!}
+              // categoryId={selectedCategory!.id}
+              // categoryName={selectedCategory!.name}
+              // category={selectedCategory!}
               // handleBackforCategory={handleBackToCategories}
               onOrganizationSelect={handleOrganizationSelect}
               selectedOrganization={selectedOrganization}
