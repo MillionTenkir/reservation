@@ -168,6 +168,7 @@ interface BranchSelectionProps {
   // handleBackforCategory: () => void;
   currentStep?: Step;
   onStepChange?: (step: Step) => void;
+  setCurrentStep?: (step: Step) => void;
 }
 
 // Helper function to group time slots by period
@@ -202,12 +203,13 @@ export default function BranchSelection({
   // handleBackforCategory,
   currentStep = "branch",
   onStepChange,
+  setCurrentStep,
 }: BranchSelectionProps) {
   const [localStep, setLocalStep] = useState<Step>(currentStep);
   const { user } = useAuth();
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [selectedOfficer, setSelectedOfficer] = useState<Officer | null>(null);
+  // const [selectedOfficer, setSelectedOfficer] = useState<Officer | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<TimeSlot | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -262,14 +264,14 @@ export default function BranchSelection({
     enabled: !!selectedBranch && !!selectedDate && !!selectedService,
   });
 
-  const {
-    data: officers,
-    isLoading: officersLoading,
-    error: officersError,
-  } = useQuery({
-    queryKey: ["officers"],
-    queryFn: fetchBranchOfficers,
-  });
+  // const {
+  //   data: officers,
+  //   isLoading: officersLoading,
+  //   error: officersError,
+  // } = useQuery({
+  //   queryKey: ["officers"],
+  //   queryFn: fetchBranchOfficers,
+  // });
 
   // Add event listener to reset selections when a new category is selected
   useEffect(() => {
@@ -404,16 +406,16 @@ export default function BranchSelection({
     setAutoScrollService(false);
   };
 
-  const handleOfficerSelect = (officerId: string) => {
-    const officer = officers?.find((o: Officer) => o.id === officerId);
-    setSelectedOfficer(officer || null);
-    setLocalStep("datetime");
+  // const handleOfficerSelect = (officerId: string) => {
+  //   const officer = officers?.find((o: Officer) => o.id === officerId);
+  //   setSelectedOfficer(officer || null);
+  //   setLocalStep("datetime");
 
-    // Notify parent component about step change
-    if (onStepChange) {
-      onStepChange("datetime");
-    }
-  };
+  //   // Notify parent component about step change
+  //   if (onStepChange) {
+  //     onStepChange("datetime");
+  //   }
+  // };
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
@@ -436,7 +438,7 @@ export default function BranchSelection({
     } else if (localStep === "datetime") {
       setSelectedDate(undefined);
       setSelectedTime(null);
-      setSelectedOfficer(null);
+      // setSelectedOfficer(null);
       setLocalStep("service");
 
       // Notify parent component about step change
@@ -463,7 +465,7 @@ export default function BranchSelection({
       appointment_date: formatMyDate(selectedDate).date,
       appointment_duration_id: selectedTime?.duration_id,
       party_size: 1,
-      officer_id: selectedOfficer?.id,
+      // officer_id: selectedOfficer?.id,
     };
 
     try {
@@ -482,13 +484,14 @@ export default function BranchSelection({
         setShowConfirmation(false);
         setShowSuccess(true);
         setTimeout(() => {
-          router.push("/");
+          // router.push("/");
           setShowSuccess(false);
           setSelectedTime(null);
           setSelectedDate(undefined);
           setSelectedService(null);
           setSelectedBranch(null);
-          onBack();
+          setCurrentStep?.("branch");
+          // onBack();
           // handleBackforCategory();
         }, 3000);
       } else {
@@ -663,54 +666,54 @@ export default function BranchSelection({
   };
 
   // Render Officer Selection
-  const renderOfficerSelection = () => {
-    if (officersLoading) {
-      return (
-        <div className="flex items-center justify-center py-4">
-          <Skeleton className="h-10 w-full max-w-md" />
-        </div>
-      );
-    }
+  // const renderOfficerSelection = () => {
+  //   if (officersLoading) {
+  //     return (
+  //       <div className="flex items-center justify-center py-4">
+  //         <Skeleton className="h-10 w-full max-w-md" />
+  //       </div>
+  //     );
+  //   }
 
-    if (officersError) {
-      return (
-        <div className="text-center text-red-500 py-4">
-          Failed to load officers. Please try again.
-        </div>
-      );
-    }
+  //   if (officersError) {
+  //     return (
+  //       <div className="text-center text-red-500 py-4">
+  //         Failed to load officers. Please try again.
+  //       </div>
+  //     );
+  //   }
 
-    return (
-      <div className="py-4">
-        <Card className="bg-pink-[#fadee6] shadow-md border-pink-100">
-          <CardContent className="p-4 mt-4">
-            <h4 className="font-medium text-lg mb-4 text-center flex items-center justify-center gap-2">
-              <UserRound className="h-5 w-5 text-[#E6007E]" />
-              Select an Officer
-            </h4>
-            <Select onValueChange={handleOfficerSelect}>
-              <SelectTrigger className="w-full bg-white">
-                <SelectValue placeholder="Choose an officer" />
-              </SelectTrigger>
-              <SelectContent>
-                {officers && officers.length > 0 ? (
-                  officers.map((officer: Officer) => (
-                    <SelectItem key={officer.id} value={officer.id}>
-                      {officer.firstname} {officer.lastname}
-                    </SelectItem>
-                  ))
-                ) : (
-                  <SelectItem value="none" disabled>
-                    No officers available
-                  </SelectItem>
-                )}
-              </SelectContent>
-            </Select>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="py-4">
+  //       <Card className="bg-pink-[#fadee6] shadow-md border-pink-100">
+  //         <CardContent className="p-4 mt-4">
+  //           <h4 className="font-medium text-lg mb-4 text-center flex items-center justify-center gap-2">
+  //             <UserRound className="h-5 w-5 text-[#E6007E]" />
+  //             Select an Officer
+  //           </h4>
+  //           <Select onValueChange={handleOfficerSelect}>
+  //             <SelectTrigger className="w-full bg-white">
+  //               <SelectValue placeholder="Choose an officer" />
+  //             </SelectTrigger>
+  //             <SelectContent>
+  //               {officers && officers.length > 0 ? (
+  //                 officers.map((officer: Officer) => (
+  //                   <SelectItem key={officer.id} value={officer.id}>
+  //                     {officer.firstname} {officer.lastname}
+  //                   </SelectItem>
+  //                 ))
+  //               ) : (
+  //                 <SelectItem value="none" disabled>
+  //                   No officers available
+  //                 </SelectItem>
+  //               )}
+  //             </SelectContent>
+  //           </Select>
+  //         </CardContent>
+  //       </Card>
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="space-y-8">
@@ -737,10 +740,10 @@ export default function BranchSelection({
           {renderServiceSelection()}
 
           {/* Officer selection after service selection */}
-          {selectedService && renderOfficerSelection()}
+          {/* {selectedService && renderOfficerSelection()} */}
 
           {/* Show continue button if service is selected but no officer yet */}
-          {selectedService &&
+          {/* {selectedService &&
             !selectedOfficer &&
             officers &&
             officers.length === 0 && (
@@ -755,7 +758,18 @@ export default function BranchSelection({
                   Continue Without Officer
                 </Button>
               </div>
-            )}
+            )} */}
+            <div className="flex justify-center mt-4">
+                <Button
+                  className="bg-[#E6007E] hover:bg-[#C4006C]"
+                  onClick={() => {
+                    setLocalStep("datetime");
+                    if (onStepChange) onStepChange("datetime");
+                  }}
+                >
+                  Continue
+                </Button>
+              </div>  
         </div>
       )}
 

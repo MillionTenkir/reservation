@@ -26,6 +26,7 @@ interface OrganizationListProps {
   selectedOrganization?: Organization | null;
   currentStep?: Step;
   onStepChange?: (step: Step) => void;
+  setCurrentStep?: (step: Step) => void;
 }
 
 export default function OrganizationList({
@@ -33,6 +34,7 @@ export default function OrganizationList({
   selectedOrganization,
   currentStep = "organization",
   onStepChange,
+  setCurrentStep,
 }: OrganizationListProps) {
   const [selectedOrg, setSelectedOrg] = useState<Organization | null>(
     selectedOrganization || null
@@ -84,6 +86,7 @@ export default function OrganizationList({
               // handleBackforCategory={handleBackforCategory}
               currentStep={currentStep}
               onStepChange={handleStepChange}
+              setCurrentStep={setCurrentStep}
             />
           </div>
         )}

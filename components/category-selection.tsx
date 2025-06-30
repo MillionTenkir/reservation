@@ -118,6 +118,7 @@ export default function CategorySelection() {
               onOrganizationSelect={handleOrganizationSelect}
               selectedOrganization={selectedOrganization}
               currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
               onStepChange={handleStepChange}
             />
           </div>
