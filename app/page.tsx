@@ -53,7 +53,10 @@ export default function Home() {
           {/* <h2 className="text-3xl mb-8 text-center font-semibold text-gray-800">
             Make a Reservation
           </h2> */}
-          <Image src="/soreti-logo.png" alt="Soreti Logo" width={100} height={100} />
+          <div className="flex justify-center items-center my6">
+             <Image src="/soreti-logo.png" alt="Soreti Logo" width={120} height={120} />
+          </div>
+  
           <CategorySelection />
         </div>
 
