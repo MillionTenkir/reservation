@@ -20,8 +20,8 @@ interface RegistrationFormProps {
 
 export default function RegistrationForm({ phoneNumber, otp }: RegistrationFormProps) {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
   })
   const router = useRouter()
@@ -30,13 +30,14 @@ export default function RegistrationForm({ phoneNumber, otp }: RegistrationFormP
   const registerMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
       // Replace with your actual API call
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
-          phoneNumber,
+          mobile: phoneNumber, 
           otp,
+          role: "Customer User Access"
         }),
       })
 
@@ -74,7 +75,7 @@ export default function RegistrationForm({ phoneNumber, otp }: RegistrationFormP
     e.preventDefault()
 
     // Simple validation
-    if (!formData.firstName || !formData.lastName || !formData.email) {
+    if (!formData.firstname || !formData.lastname || !formData.email) {
       toast({
         title: "Missing Information",
         description: "Please fill in all fields",
@@ -116,14 +117,14 @@ export default function RegistrationForm({ phoneNumber, otp }: RegistrationFormP
           <form onSubmit={handleSubmit}>
             <div className="grid gap-5">
               <div className="grid gap-2">
-                <Label htmlFor="firstName" className="text-base">
+                <Label htmlFor="firstname" className="text-base">
                   First Name
                 </Label>
                 <Input
-                  id="firstName"
-                  name="firstName"
+                  id="firstname"
+                  name="firstname"
                   placeholder="Enter your first name"
-                  value={formData.firstName}
+                  value={formData.firstname}
                   onChange={handleChange}
                   className="h-12 text-base"
                   required
@@ -131,14 +132,14 @@ export default function RegistrationForm({ phoneNumber, otp }: RegistrationFormP
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="lastName" className="text-base">
+                <Label htmlFor="lastname" className="text-base">
                   Last Name
                 </Label>
                 <Input
-                  id="lastName"
-                  name="lastName"
+                  id="lastname"
+                  name="lastname"
                   placeholder="Enter your last name"
-                  value={formData.lastName}
+                  value={formData.lastname}
                   onChange={handleChange}
                   className="h-12 text-base"
                   required
