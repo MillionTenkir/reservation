@@ -715,7 +715,7 @@ export default function BranchSelection({
   return (
     <div className="space-y-8">
       <h2 className="text-2xl font-semibold mb-6 text-center font-work-sans text-gray-800">
-        {organization.name}
+        {/* {organization.name} */}
       </h2>
 
       {/* Branch selection - only show when in branch step */}
