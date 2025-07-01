@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Only redirect if we've actually logged out (not on initial load)
       const storedToken = localStorage.getItem("auth-token");
       if (!storedToken) {
-        router.push("/auth/login");
+        // router.push("/auth/login");
       }
     }
   }, [user, token, isTokenLoading, router]);
