@@ -10,10 +10,10 @@ import { useAuth } from "@/lib/auth-context";
 import Image from "next/image";
 
 export default function Home() {
-  const { token, user, isTokenLoading } = useAuth();
+  const { clientToken, clientUser, isClientTokenLoading } = useAuth();
 
   // Don't redirect if we're still loading the token
-  if (isTokenLoading) {
+  if (isClientTokenLoading) {
     // console.log("isTokenLoading", isTokenLoading);
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -27,7 +27,7 @@ export default function Home() {
     );
   }
 
-  if (!token) {
+  if (!clientToken) {
     redirect("/auth/login");
   }
 

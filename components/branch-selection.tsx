@@ -206,7 +206,7 @@ export default function BranchSelection({
   setCurrentStep,
 }: BranchSelectionProps) {
   const [localStep, setLocalStep] = useState<Step>(currentStep);
-  const { user } = useAuth();
+  const { clientUser } = useAuth();
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   // const [selectedOfficer, setSelectedOfficer] = useState<Officer | null>(null);
@@ -455,11 +455,11 @@ export default function BranchSelection({
     setIsProcessing(true);
 
     const reservationData = {
-      first_name: user?.data?.firstname,
-      last_name: user?.data?.lastname,
-      mobile: user?.data?.mobile,
+      first_name: clientUser?.data?.firstname,
+      last_name: clientUser?.data?.lastname,
+      mobile: clientUser?.data?.mobile,
       status: "confirmed",
-      created_by: user?.data?.id,
+      created_by: clientUser?.data?.id,
       appointment_through: "self",
       branch_service_id: selectedService?.id,
       appointment_date: formatMyDate(selectedDate).date,

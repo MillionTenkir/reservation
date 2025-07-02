@@ -35,7 +35,7 @@ export default function OtpVerification({
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const router = useRouter();
   const { toast } = useToast();
-  const { setToken } = useAuth();
+  const { setClientToken } = useAuth();
 
   // Initialize refs array
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function OtpVerification({
     onSuccess: (data) => {
       if (data) {
         // console.log("data", data);
-        setToken(data);
+        setClientToken(data);
         toast({
           title: "Success",
           description: "You have successfully logged in",

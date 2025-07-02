@@ -21,7 +21,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const { user, logout, isTokenLoading } = useAuth();
+  const { clientUser, clientLogout, isClientTokenLoading } = useAuth();
   // console.log("The user is: ", user);
   // Add shadow to header on scroll
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Header() {
   }, []);
 
   // Don't render header if no user is logged in
-  if (!isTokenLoading && !user) {
+  if (!isClientTokenLoading && !clientUser) {
     return null;
   }
 
@@ -69,8 +69,8 @@ export default function Header() {
                     alt={user.data.firstname}
                   /> */}
                   <AvatarFallback className="bg-[#E6007E]/10 text-[#E6007E]">
-                    {user?.data.firstname[0]}
-                    {user?.data.lastname[0]}
+                    {clientUser?.data.firstname[0]}
+                    {clientUser?.data.lastname[0]}
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -79,10 +79,10 @@ export default function Header() {
               <DropdownMenuLabel>
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium leading-none">
-                    {user?.data.firstname} {user?.data.lastname}
+                    {clientUser?.data.firstname} {clientUser?.data.lastname}
                   </p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    {user?.data.email}
+                    {clientUser?.data.email}
                   </p>
                 </div>
               </DropdownMenuLabel>
@@ -96,7 +96,7 @@ export default function Header() {
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout}>
+              <DropdownMenuItem onClick={clientLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>
