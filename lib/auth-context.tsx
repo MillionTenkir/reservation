@@ -236,7 +236,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     // Add a small delay to show the spinner during logout
     setTimeout(() => {
-      router.push("/");
+      router.push("/admin");
       setIsAdminLoading(false);
     }, 500);
   }, [router]);

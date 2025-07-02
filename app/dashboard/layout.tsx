@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useAuth } from "@/context/auth-context"
+import { useAuth } from "@/lib/auth-context"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
@@ -14,20 +14,20 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user, isLoading } = useAuth()
+  const { adminUser, isAdminLoading } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.push("/")
+    if (!isAdminLoading && !adminUser) {
+      router.push("/admin")
     }
-  }, [user, isLoading, router])
+  }, [adminUser, isAdminLoading, router])
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <FullPageSpinner />
   }
 
-  if (!user) {
+  if (!adminUser) {
     return <FullPageSpinner />
   }
 

@@ -30,14 +30,14 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 
 export default function ReservationsPage() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "cb57b04b-3418-42b9-83e9-d770aa54875a",
     "b7dffb6d-8c49-4705-ae2b-ebd70555cac7",
     "01bf91c3-abb9-4c5c-8b84-364dd28e8688",
     "f90db2ec-cfa3-45ed-8ee0-4321f061a7bc",
   ]);
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <RoleGuardLoading />;
   }
 

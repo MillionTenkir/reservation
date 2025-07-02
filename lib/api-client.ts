@@ -8,7 +8,7 @@ const baseConfig = {
 // Helper function to add authorization token
 const addAuthHeader = (config: RequestInit) => {
   const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    typeof window !== "undefined" ? localStorage.getItem("admin-token") : null;
   if (token) {
     return {
       ...config,

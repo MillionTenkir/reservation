@@ -22,6 +22,14 @@ export interface CreateServicePayload {
   organization_id: string;
 }
 
+export const createService = async (service: CreateServicePayload): Promise<Service> => {
+  const response = await apiClient(`/v1/services`, {
+    method: "POST",
+    body: JSON.stringify(service),
+  });
+  return response.data;
+};
+
 export const fetchServicesByBranch = async (
   branch_id: string
 ): Promise<{ id: string; name: string }[]> => {

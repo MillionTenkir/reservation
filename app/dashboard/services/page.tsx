@@ -46,7 +46,7 @@ import {
   getServicesByOrganization,
 } from "@/lib/api/service";
 import { toast } from "sonner";
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { updateService } from "@/lib/api/service";
 
@@ -57,17 +57,17 @@ interface ServiceResponse extends Service {
 }
 
 export default function ServicesPage() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "cb57b04b-3418-42b9-83e9-d770aa54875a",
     "b7dffb6d-8c49-4705-ae2b-ebd70555cac7",
     "4f0b86ba-9c17-4543-8542-1041da444fa3",
     "01bf91c3-abb9-4c5c-8b84-364dd28e8688"
   ]);
 
-  const { user } = useAuth();
+  const { adminUser } = useAuth();
   const queryClient = useQueryClient();
 
-  const organization_id = user?.organization_id || "";
+  const organization_id = adminUser?.organization_id || "";
   
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -166,7 +166,7 @@ export default function ServicesPage() {
     );
   };
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <RoleGuardLoading />;
   }
 

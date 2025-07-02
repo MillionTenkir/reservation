@@ -21,15 +21,6 @@ import { TvAccessDashboard } from "@/components/dashboard/tv-access-dashboard";
 export default function DashboardPage() {
   const { adminUser } = useAuth();
 
-  // const roleDisplayName = {
-  //   "cb57b04b-3418-42b9-83e9-d770aa54875a": "Super Admin",
-  //   organization_manager: "Organization Manager",
-  //   branch_manager: "Branch Manager",
-  //   field_agent: "Field Agent",
-  //   restaurant_officer: "Restaurant Officer",
-  //   administrator: "Administrator",
-  // }[user?.role || ""];
-
   // Render different dashboard components based on user role
   const renderDashboard = () => {
     switch (adminUser?.role) {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useAuth } from "@/context/auth-context"
+import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { FullPageSpinner } from "@/components/ui/spinner"
@@ -14,18 +14,18 @@ type Role =
   | "4f0b86ba-9c17-4543-8542-1041da444fa3";
 
 export function useRoleGuard(allowedRoles: Role[]) {
-  const { user, isLoading } = useAuth()
+  const { adminUser, isAdminLoading } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && user) {
-      if (!allowedRoles.includes(user.role as Role)) {
+    if (!isAdminLoading && adminUser) {
+      if (!allowedRoles.includes(adminUser.role as Role)) {
         router.push("/dashboard")
       }
     }
-  }, [user, isLoading, router, allowedRoles])
+  }, [adminUser, isAdminLoading, router, allowedRoles])
 
-  return { isAuthorized: user && allowedRoles.includes(user.role as Role), isLoading }
+  return { isAuthorized: adminUser && allowedRoles.includes(adminUser.role as Role), isAdminLoading }
 }
 
 // Create a component to use with the role guard

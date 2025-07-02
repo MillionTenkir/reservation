@@ -49,7 +49,7 @@ import { toast } from "sonner";
 import { fetchMyBranches } from "../../../lib/api/branch"
 
 export default function BranchesPage() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "cb57b04b-3418-42b9-83e9-d770aa54875a",
     "b7dffb6d-8c49-4705-ae2b-ebd70555cac7",
     "4f0b86ba-9c17-4543-8542-1041da444fa3",
@@ -112,7 +112,7 @@ export default function BranchesPage() {
     createBranchMutation.mutate(newBranch);
   };
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <RoleGuardLoading />;
   }
 
