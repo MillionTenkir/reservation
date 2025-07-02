@@ -18,7 +18,7 @@ interface Customer {
 }
 
 export default function SelfCheckinPage() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "f90db2ec-cfa3-45ed-8ee0-4321f061a7bc",
   ]);
 
@@ -47,7 +47,7 @@ export default function SelfCheckinPage() {
     setFoundCustomer(null);
   };
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <RoleGuardLoading />;
   }
   if (!isAuthorized) {

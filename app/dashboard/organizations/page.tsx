@@ -10,12 +10,12 @@ import {
 } from "@/components/ui/card";
 
 export default function OrganizationsPage() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "cb57b04b-3418-42b9-83e9-d770aa54875a",
     "4f0b86ba-9c17-4543-8542-1041da444fa3",
   ]);
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <RoleGuardLoading />;
   }
 

@@ -132,7 +132,7 @@ const mockUsers = [
 ];
 
 export default function FrequentCustomers() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "cb57b04b-3418-42b9-83e9-d770aa54875a",
     "b7dffb6d-8c49-4705-ae2b-ebd70555cac7",
     "01bf91c3-abb9-4c5c-8b84-364dd28e8688",

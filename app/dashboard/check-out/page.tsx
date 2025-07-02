@@ -90,11 +90,11 @@ import { useQuery } from "@tanstack/react-query";
 // ];
 
 export default function CheckOutPage() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "f90db2ec-cfa3-45ed-8ee0-4321f061a7bc",
   ]);
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <RoleGuardLoading />;
   }
   if (!isAuthorized) {

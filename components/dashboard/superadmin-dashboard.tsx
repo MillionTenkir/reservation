@@ -208,7 +208,7 @@ export function SuperAdminDashboard() {
     queryFn: fetchAllBranches,
   });
 
-  const branches = branchResponse?.data || [];
+  const branches = branchResponse || [];
 
   const { data: reservationResponse, isLoading: isLoadingReservations } =
     useQuery({

@@ -29,7 +29,7 @@ import { Check, X } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useQuery } from "@tanstack/react-query";
 import { fetchServicesByBranch } from "@/lib/api/service";
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { fetchOfficers } from "@/lib/api/officers";
 
 // Define types for our data
@@ -59,12 +59,12 @@ interface FormData {
 }
 
 export default function BookingPage() {
-  const { isAuthorized, isLoading } = useRoleGuard([
+  const { isAuthorized, isAdminLoading } = useRoleGuard([
     "f90db2ec-cfa3-45ed-8ee0-4321f061a7bc","01bf91c3-abb9-4c5c-8b84-364dd28e8688"
   ]);
 
-  const { user } = useAuth();
-  const branchId = user?.branch_id;
+  const { adminUser } = useAuth();
+  const branchId = adminUser?.branch_id;
   const [step, setStep] = useState(1);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [reservationData, setReservationData] = useState<ReservationData>({
@@ -168,7 +168,7 @@ export default function BookingPage() {
     form.reset();
   };
 
-  if (isLoading) {
+  if (isAdminLoading) {
     return <RoleGuardLoading />;
   }
 

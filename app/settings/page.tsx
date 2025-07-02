@@ -34,11 +34,11 @@ export default function SettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-  const { user, token } = useAuth();
+  const { clientUser, clientToken } = useAuth();
   useEffect(() => {
     // Check if user is logged in
     // const token = document.cookie.includes("auth-token");
-    if (!token) {
+    if (!clientToken) {
       router.push("/auth/login");
       return;
     }
@@ -130,7 +130,7 @@ export default function SettingsPage() {
                       <Input
                         id="firstName"
                         name="firstName"
-                        value={user?.data?.firstname || ""}
+                        value={clientUser?.data?.firstname || ""}
                         onChange={handleChange}
                       />
                     </div>
@@ -139,7 +139,7 @@ export default function SettingsPage() {
                       <Input
                         id="lastName"
                         name="lastName"
-                        value={user?.data?.lastname || ""}
+                        value={clientUser?.data?.lastname || ""}
                         onChange={handleChange}
                       />
                     </div>
@@ -151,7 +151,7 @@ export default function SettingsPage() {
                       id="email"
                       name="email"
                       type="email"
-                      value={user?.data?.email || ""}
+                      value={clientUser?.data?.email || ""}
                       onChange={handleChange}
                     />
                   </div>
@@ -161,7 +161,7 @@ export default function SettingsPage() {
                     <Input
                       id="phone"
                       name="phone"
-                      value={user?.data?.mobile || ""}
+                      value={clientUser?.data?.mobile || ""}
                       onChange={handleChange}
                       disabled
                     />

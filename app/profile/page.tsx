@@ -32,12 +32,12 @@ export default function ProfilePage() {
   const [reservations, setReservations] = useState<Reservation[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
-  const { user, token, isTokenLoading } = useAuth()
+  const { clientUser, clientToken, isClientTokenLoading } = useAuth()
   useEffect(() => {
     // Check if user is logged in
     // const token = document.cookie.includes("auth-token")
-    if (!token) {
-      console.log("No token found:", !token)
+    if (!clientToken) {
+      console.log("No token found:", !clientToken)
       router.push("/auth/login")
       return
     }
@@ -80,7 +80,7 @@ export default function ProfilePage() {
 
       setIsLoading(false)
     }, 1000)
-  }, [router, token, isTokenLoading])
+  }, [router, clientToken, isClientTokenLoading])
 
   if (isLoading) {
     return (
@@ -106,16 +106,16 @@ export default function ProfilePage() {
                   <Avatar className="h-24 w-24">
                     <AvatarImage
                       src="/placeholder.svg?height=96&width=96"
-                      alt={`${user?.data.firstname} ${user?.data.lastname}`}
+                      alt={`${clientUser?.data.firstname} ${clientUser?.data.lastname}`}
                     />
                     <AvatarFallback className="text-2xl bg-[#E6007E]/10 text-[#E6007E]">
-                      {user?.data.firstname?.[0]}
-                      {user?.data.lastname?.[0]}
+                      {clientUser?.data.firstname?.[0]}
+                      {clientUser?.data.lastname?.[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div className="text-center">
                     <h2 className="text-xl font-bold">
-                      {user?.data.firstname} {user?.data.lastname}
+                      {clientUser?.data.firstname} {clientUser?.data.lastname}
                     </h2>
                     <p className="text-sm text-muted-foreground">Member since June 2023</p>
                   </div>
@@ -130,11 +130,11 @@ export default function ProfilePage() {
               <CardContent className="space-y-4">
                 <div className="flex items-center">
                   <Phone className="h-4 w-4 mr-2 text-[#E6007E]" />
-                  <span>{user?.data.mobile}</span>
+                  <span>{clientUser?.data.mobile}</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="h-4 w-4 mr-2 text-[#E6007E]" />
-                  <span>{user?.data.email}</span>
+                  <span>{clientUser?.data.email}</span>
                 </div>
               </CardContent>
             </Card>
