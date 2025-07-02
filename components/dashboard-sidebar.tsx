@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 import {
   BarChart3,
@@ -218,13 +218,13 @@ const sidebarItems: SidebarItem[] = [
 ];
 
 export function DashboardSidebar() {
-  const { user, logout } = useAuth();
+  const { adminUser, adminLogout } = useAuth();
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Filter sidebar items based on user role
   const filteredItems = sidebarItems.filter(
-    (item) => user && item.roles.includes(user.role)
+    (item) => adminUser && item.roles.includes(adminUser.role)
   );
 
   const Sidebar = (
@@ -315,7 +315,7 @@ export function DashboardSidebar() {
             "w-full justify-start text-gray-500 hover:text-[#e6007e] text-[13px] font-semibold",
             isCollapsed && "justify-center px-0"
           )}
-          onClick={logout}
+          onClick={adminLogout}
         >
           <LogOut className="h-5 w-5 mr-2" />
           {!isCollapsed && "Logout"}

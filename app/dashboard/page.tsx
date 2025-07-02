@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { motion } from "framer-motion";
 import { SuperAdminDashboard } from "@/components/dashboard/superadmin-dashboard";
 import { OrganizationManagerDashboard } from "@/components/dashboard/organization-manager-dashboard";
@@ -19,7 +19,7 @@ import { TvAccessDashboard } from "@/components/dashboard/tv-access-dashboard";
 // }
 
 export default function DashboardPage() {
-  const { user } = useAuth();
+  const { adminUser } = useAuth();
 
   // const roleDisplayName = {
   //   "cb57b04b-3418-42b9-83e9-d770aa54875a": "Super Admin",
@@ -32,7 +32,7 @@ export default function DashboardPage() {
 
   // Render different dashboard components based on user role
   const renderDashboard = () => {
-    switch (user?.role) {
+    switch (adminUser?.role) {
       case "cb57b04b-3418-42b9-83e9-d770aa54875a":
         return <SuperAdminDashboard />;
       case "b7dffb6d-8c49-4705-ae2b-ebd70555cac7":
@@ -62,7 +62,7 @@ export default function DashboardPage() {
       >
         {/* <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1> */}
         <p className="text-muted-foreground">
-          Welcome back, <span className="font-medium">{user?.firstname}</span>.
+          Welcome back, <span className="font-medium">{adminUser?.firstname}</span>.
           {/* You are logged in as{" "}
           <span className="font-medium">{roleDisplayName}</span>. */}
         </p>

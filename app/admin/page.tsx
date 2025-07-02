@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { useState } from "react";
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,11 +24,11 @@ import { AnimatedGradientBorder } from "@/components/ui/animated-gradient-border
 export default function LoginPage() {
   const [mobile, setMobile] = useState("+251");
   const [password, setPassword] = useState("");
-  const { login, isLoading, error } = useAuth();
+  const { adminLogin, isAdminLoading, adminError } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(mobile, password);
+    await adminLogin(mobile, password);
   };
 
   return (
@@ -63,14 +63,14 @@ export default function LoginPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
+                {adminError && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                   >
                     <Alert variant="destructive">
-                      <AlertDescription>{error}</AlertDescription>
+                      <AlertDescription>{adminError}</AlertDescription>
                     </Alert>
                   </motion.div>
                 )}
@@ -125,9 +125,9 @@ export default function LoginPage() {
                 <Button
                   className="w-full bg-[#e6007e] hover:opacity-90 transition-opacity"
                   onClick={handleSubmit}
-                  disabled={isLoading}
+                  disabled={isAdminLoading}
                 >
-                  {isLoading ? (
+                  {isAdminLoading ? (
                     <>
                       <Spinner className="mr-2" size="sm" />
                       Signing in...

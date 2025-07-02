@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/components/query-provider";
 import Header from "@/components/header";
 import { AuthProvider } from "@/lib/auth-context";
-import { AuthProvider as AuthProvider2 } from "@/context/auth-context";
+// import { AuthProvider as AuthProvider2 } from "@/context/auth-context";
 
 export const metadata: Metadata = {
   title: "CHECHE - Reservation System",
@@ -32,11 +32,11 @@ export default function RootLayout({
         >
           <QueryProvider>
             <AuthProvider>
-              <AuthProvider2>
+              {/* <AuthProvider2> */}
                 <Header />
                 {children}
                 <Toaster />
-              </AuthProvider2>
+              {/* </AuthProvider2> */}
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
